@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 8/11/2019 10:16:27 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="sistemahotel.entity.Recepcionista" table="recepcionista" catalog="sistema_hotel" optimistic-lock="version">
+        <id name="id" type="int">
+            <column name="id" />
+            <generator class="foreign">
+                <param name="property">personal</param>
+            </generator>
+        </id>
+        <one-to-one name="personal" class="sistemahotel.entity.Personal" constrained="true"></one-to-one>
+        <property name="recepTurno" type="string">
+            <column name="RECEP_TURNO" length="1" not-null="true" />
+        </property>
+        <property name="recepUname" type="string">
+            <column name="RECEP_UNAME" length="15" not-null="true" unique="true" />
+        </property>
+        <property name="recepPass" type="string">
+            <column name="RECEP_PASS" length="15" not-null="true" />
+        </property>
+        <set name="reservacions" table="reservacion" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="PER_ID" not-null="true" />
+            </key>
+            <one-to-many class="sistemahotel.entity.Reservacion" />
+        </set>
+    </class>
+</hibernate-mapping>

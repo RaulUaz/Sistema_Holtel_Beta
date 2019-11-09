@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 8/11/2019 10:16:27 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="sistemahotel.entity.Reservacion" table="reservacion" catalog="sistema_hotel" optimistic-lock="version">
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="cliente" class="sistemahotel.entity.Cliente" fetch="select">
+            <column name="CLI_ID" not-null="true" />
+        </many-to-one>
+        <many-to-one name="recepcionista" class="sistemahotel.entity.Recepcionista" fetch="select">
+            <column name="PER_ID" not-null="true" />
+        </many-to-one>
+        <property name="resEntradaCli" type="date">
+            <column name="RES_ENTRADA_CLI" length="10" not-null="true" />
+        </property>
+        <property name="resSalidaCli" type="date">
+            <column name="RES_SALIDA_CLI" length="10" not-null="true" />
+        </property>
+        <property name="resFecha" type="date">
+            <column name="RES_FECHA" length="10" not-null="true" />
+        </property>
+        <property name="resNumPersonas" type="int">
+            <column name="RES_NUM_PERSONAS" not-null="true" />
+        </property>
+        <property name="resNumCuarto" type="int">
+            <column name="RES_NUM_CUARTO" not-null="true" />
+        </property>
+        <property name="resPago" type="float">
+            <column name="RES_PAGO" precision="12" scale="0" not-null="true" />
+        </property>
+        <property name="resHoraLlegada" type="time">
+            <column name="RES_HORA_LLEGADA" length="8" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

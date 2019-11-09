@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 8/11/2019 10:16:27 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="sistemahotel.entity.Puesto" table="puesto" catalog="sistema_hotel" optimistic-lock="version">
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <property name="pueNombre" type="string">
+            <column name="PUE_NOMBRE" length="25" not-null="true" />
+        </property>
+        <property name="pueSueldo" type="big_decimal">
+            <column name="PUE_SUELDO" not-null="true" />
+        </property>
+        <set name="personals" table="personal" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="PUE_ID" not-null="true" />
+            </key>
+            <one-to-many class="sistemahotel.entity.Personal" />
+        </set>
+    </class>
+</hibernate-mapping>

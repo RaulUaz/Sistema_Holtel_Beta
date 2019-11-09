@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 8/11/2019 10:16:27 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="sistemahotel.entity.Personal" table="personal" catalog="sistema_hotel" optimistic-lock="version">
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="puesto" class="sistemahotel.entity.Puesto" fetch="select">
+            <column name="PUE_ID" not-null="true" />
+        </many-to-one>
+        <property name="perNombre" type="string">
+            <column name="PER_NOMBRE" length="20" not-null="true" />
+        </property>
+        <property name="perApellido" type="string">
+            <column name="PER_APELLIDO" length="20" not-null="true" />
+        </property>
+        <property name="perDireccion" type="string">
+            <column name="PER_DIRECCION" length="20" not-null="true" />
+        </property>
+        <property name="perCalle" type="string">
+            <column name="PER_CALLE" length="30" not-null="true" />
+        </property>
+        <property name="perColonia" type="string">
+            <column name="PER_COLONIA" length="30" not-null="true" />
+        </property>
+        <property name="perTelefono" type="string">
+            <column name="PER_TELEFONO" length="13" not-null="true" />
+        </property>
+        <property name="perFechaNac" type="date">
+            <column name="PER_FECHA_NAC" length="10" not-null="true" />
+        </property>
+        <property name="perCuidad" type="string">
+            <column name="PER_CUIDAD" length="15" not-null="true" />
+        </property>
+        <one-to-one name="recepcionista" class="sistemahotel.entity.Recepcionista"></one-to-one>
+    </class>
+</hibernate-mapping>
