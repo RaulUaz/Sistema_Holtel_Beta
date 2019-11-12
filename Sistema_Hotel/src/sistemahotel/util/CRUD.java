@@ -203,6 +203,52 @@ public class CRUD {
         return resultList;
     }
     
+        public static List consultarNumeric(String entidad,String attrib, int num)throws HibernateException{
+        Session session = null;
+        List resultList = null;
+        try{
+            session = HibernateUtil.getSessionFactory().openSession();
+            session.beginTransaction();
+                Query q = session.createQuery("SELECT p FROM "+entidad+" p WHERE p."+attrib+"="+num);
+                q.setMaxResults(1);
+                resultList = (List)q.list();
+            session.getTransaction().commit();
+            
+        }finally{
+            if (session!=null){
+                try{
+                    session.close();
+                }catch(HibernateException hex){
+                   HibernateException ignore;
+                }//fin del catch
+            }//fin del if
+        }//fin finally
+        return resultList;
+    }
+        
+            public static List consultarString(String entidad,String attrib, String search)throws HibernateException{
+        Session session = null;
+        List resultList = null;
+        try{
+            session = HibernateUtil.getSessionFactory().openSession();
+            session.beginTransaction();
+                Query q = session.createQuery("SELECT p FROM "+entidad+" p WHERE p."+attrib+"="+search);
+                q.setMaxResults(1);
+                resultList = (List)q.list();
+            session.getTransaction().commit();
+            
+        }finally{
+            if (session!=null){
+                try{
+                    session.close();
+                }catch(HibernateException hex){
+                   HibernateException ignore;
+                }//fin del catch
+            }//fin del if
+        }//fin finally
+        return resultList;
+    }
+    
     /**
      * Permite obtener el anterior registro del id pasado como parámetro 
      * @param entidad
