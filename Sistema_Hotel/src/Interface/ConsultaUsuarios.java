@@ -376,7 +376,7 @@ public class ConsultaUsuarios extends javax.swing.JDialog {
                      
         DefaultTableModel personalModel= new DefaultTableModel();
         personalModel.setColumnIdentifiers(header);
-        usuarios=CRUD.consultar("Personal","id",id);
+        usuarios=CRUD.consultarNumeric("Personal","id",id);
         Object[] fila=new Object[personalModel.getColumnCount()];
              for(int i=0;i<usuarios.size();i++)
             {
