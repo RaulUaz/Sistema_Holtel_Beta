@@ -209,7 +209,7 @@ public class CRUD {
         try{
             session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
-                Query q = session.createQuery("SELECT p FROM "+entidad+" p WHERE p."+attrib+"="+num);
+                Query q = session.createQuery("FROM "+entidad+" p WHERE p."+attrib+"="+num);
                 q.setMaxResults(1);
                 resultList = (List)q.list();
             session.getTransaction().commit();
@@ -232,7 +232,7 @@ public class CRUD {
         try{
             session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
-                Query q = session.createQuery("SELECT p FROM "+entidad+" p WHERE p."+attrib+"="+search);
+                Query q = session.createQuery(" FROM "+entidad+" p WHERE p."+attrib+"="+search);
                 q.setMaxResults(1);
                 resultList = (List)q.list();
             session.getTransaction().commit();

@@ -7,7 +7,10 @@ package Interface;
 
 import java.awt.Dimension;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Vector;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -20,8 +23,9 @@ import sistemahotel.util.CRUD;
  */
 public class ConsultaUsuarios extends javax.swing.JDialog {
     
-    String[] header={"id","Nombre","Apellido","Direccion","Calle","Colonia","Ciudad","Telefono","Fecha de nacimiento","Puesto_id"};
+    String[] header={"id","Nombre","Apellido","Direccion","Calle","Colonia","Ciudad","Telefono","Fecha de nacimiento"};
         private List<Personal>usuarios = new ArrayList<Personal>();
+
         String consulta="";
     /**
      * Creates new form ConsultarClientes
@@ -29,21 +33,54 @@ public class ConsultaUsuarios extends javax.swing.JDialog {
     public ConsultaUsuarios(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        this.setLocationRelativeTo(null);
+        /*this.setLocationRelativeTo(null);
         Dimension dim = this.getToolkit().getScreenSize();
-        this.setSize(dim);
+        this.setSize(dim);*/
         obtenerPersonal();
     }
     
     public void obtenerPersonal()
     {
-             DefaultTableModel personalModel= new DefaultTableModel();
-             personalModel.setColumnIdentifiers(header);
+             //DefaultTableModel personalModel= new DefaultTableModel();
+             Vector<String> tableHeaders = new Vector<>();
              
-             usuarios= CRUD.obtenerTodos("Personal", 0);
-                     Object[] fila=new Object[personalModel.getColumnCount()];
-             for(int i=0;i<usuarios.size();i++)
-            {
+             tableHeaders.add("Id");
+             tableHeaders.add("Nombre");
+             tableHeaders.add("Apellidos");
+             tableHeaders.add("Dirección");
+             tableHeaders.add("Calle");
+             tableHeaders.add("Colonia");
+             tableHeaders.add("Ciudad");
+             tableHeaders.add("Telefono");             
+             tableHeaders.add("Fecha de Nacimiento");
+             //tableHeaders.add("Puesto");
+             
+             
+             
+             Vector tableData = new Vector();
+             /*personalModel.setColumnIdentifiers(header);*/
+             
+             List listaDePersonal = CRUD.obtenerTodos("Personal", 0);
+                    // Object[] fila=new Object[personalModel.getColumnCount()];
+                     
+             for (Iterator it = listaDePersonal.iterator(); it.hasNext();){
+                 Object o = it.next();
+                 Personal miPersonal = (Personal)o;
+                 Vector<Object> oneRow = new Vector<>();
+                 oneRow.add(miPersonal.getId());
+                 oneRow.add(miPersonal.getPerNombre());
+                 oneRow.add(miPersonal.getPerApellido());
+                 oneRow.add(miPersonal.getPerDireccion());
+                 oneRow.add(miPersonal.getPerCalle());
+                 oneRow.add(miPersonal.getPerColonia());
+                 oneRow.add(miPersonal.getPerCuidad());
+                 oneRow.add(miPersonal.getPerTelefono());
+                 oneRow.add(miPersonal.getPerFechaNac());
+                 oneRow.add(miPersonal.getPuesto());
+                 tableData.add(oneRow);
+             }
+             /*for(int i=0;i<usuarios.size();i++)
+             {
                 fila[0]=usuarios.get(i).getId();
                 fila[1]=usuarios.get(i).getPerNombre();
                 fila[2]=usuarios.get(i).getPerApellido();
@@ -56,9 +93,9 @@ public class ConsultaUsuarios extends javax.swing.JDialog {
                 fila[9]=usuarios.get(i).getPuesto();
                 
                 personalModel.addRow(fila);
-            }//cierra for
+            }//cierra for*/
             
-             tblUsuarios.setModel(personalModel);     
+             tblUsuarios.setModel(new DefaultTableModel(tableData, tableHeaders));
     }
     
 
@@ -93,7 +130,6 @@ public class ConsultaUsuarios extends javax.swing.JDialog {
         jTextField8 = new javax.swing.JTextField();
         btnAgregar = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
-        dateChooserCombo1 = new datechooser.beans.DateChooserCombo();
         jLabel10 = new javax.swing.JLabel();
         jTextField9 = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
@@ -102,6 +138,7 @@ public class ConsultaUsuarios extends javax.swing.JDialog {
         txtBuscar = new javax.swing.JTextField();
         cmbConsulta = new javax.swing.JComboBox<>();
         jButton1 = new javax.swing.JButton();
+        btnRef = new javax.swing.JButton();
         btnCerrar = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
 
@@ -178,10 +215,8 @@ public class ConsultaUsuarios extends javax.swing.JDialog {
                     .addComponent(jLabel9)
                     .addComponent(jLabel10))
                 .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(dateChooserCombo1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(85, 85, 85))
+                .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(150, 150, 150))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnAgregar)
@@ -191,25 +226,22 @@ public class ConsultaUsuarios extends javax.swing.JDialog {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(14, 14, 14)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5)
+                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel9))
+                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel1)
-                            .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel5)
-                            .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel9))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel2)
-                                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel6)
-                                .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel10)
-                                .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addComponent(dateChooserCombo1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel2)
+                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel6)
+                        .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel10)
+                        .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -234,16 +266,27 @@ public class ConsultaUsuarios extends javax.swing.JDialog {
 
         tblUsuarios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null}
+                {null},
+                {null},
+                {null},
+                {null}
             },
             new String [] {
-                "id", "null", "null", "Title 4", "Title 5", "Title 6", "Title 7", "Title 8", "Title 9", "Title 10"
+                "id"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(tblUsuarios);
+        if (tblUsuarios.getColumnModel().getColumnCount() > 0) {
+            tblUsuarios.getColumnModel().getColumn(0).setResizable(false);
+        }
 
         cmbConsulta.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "id", "Nombre", "Apellido" }));
         cmbConsulta.addActionListener(new java.awt.event.ActionListener() {
@@ -256,6 +299,13 @@ public class ConsultaUsuarios extends javax.swing.JDialog {
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
+            }
+        });
+
+        btnRef.setText("refrescar");
+        btnRef.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRefActionPerformed(evt);
             }
         });
 
@@ -272,6 +322,8 @@ public class ConsultaUsuarios extends javax.swing.JDialog {
                         .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(cmbConsulta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(31, 31, 31)
+                        .addComponent(btnRef)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 929, Short.MAX_VALUE))
                 .addContainerGap())
@@ -283,7 +335,8 @@ public class ConsultaUsuarios extends javax.swing.JDialog {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cmbConsulta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
+                    .addComponent(jButton1)
+                    .addComponent(btnRef))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(57, Short.MAX_VALUE))
@@ -347,23 +400,15 @@ public class ConsultaUsuarios extends javax.swing.JDialog {
                                        
      if(cmbConsulta.getSelectedIndex()==0)
      {
-      consulta="select id from personal where";   
+      consulta="id";   
      }
      if(cmbConsulta.getSelectedIndex()==1)
      {
-      consulta="SELECT * FROM alumnos  WHERE nombrePila LIKE CONCAT('%',?,'%')"; 
+      consulta="pernombre"; 
      }
      if(cmbConsulta.getSelectedIndex()==2)
      {
-      consulta="SELECT * FROM alumnos  WHERE apellidoPaterno LIKE CONCAT('%',?,'%')"; 
-     }
-     if(cmbConsulta.getSelectedIndex()==3)
-     {
-      consulta="SELECT * FROM alumnos  WHERE correoElectronico LIKE CONCAT('%',?,'%')"; 
-     }
-     if(cmbConsulta.getSelectedIndex()==4)
-     {
-      consulta="SELECT * FROM alumnos  WHERE telefono LIKE CONCAT('%',?,'%')"; 
+      consulta="perapellido"; 
      }//fin de la scomparaciones para la seleccion de una consulta
      txtBuscar.setText("");
      txtBuscar.requestFocusInWindow();
@@ -372,11 +417,22 @@ public class ConsultaUsuarios extends javax.swing.JDialog {
     }//GEN-LAST:event_cmbConsultaActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        int id= Integer.parseInt(txtBuscar.getText());
-                     
-        DefaultTableModel personalModel= new DefaultTableModel();
+        DefaultTableModel personalModel= new DefaultTableModel();      
+        if(consulta=="id")
+        {
+            int id= Integer.parseInt(txtBuscar.getText());           
+
+            personalModel.setColumnIdentifiers(header);
+            //usuarios=CRUD.consultarNumeric("Personal",consulta,id);
+            Personal miPersonal = Repository.PersonalRepository.obtenerPersonalPorId(id);
+            JOptionPane.showMessageDialog(null, miPersonal.getPerNombre());
+        }
+        else
+        {
+        String texto=txtBuscar.getText();
         personalModel.setColumnIdentifiers(header);
-        usuarios=CRUD.consultarNumeric("Personal","id",id);
+        usuarios=CRUD.consultarString("Personal",consulta,texto);
+        }
         Object[] fila=new Object[personalModel.getColumnCount()];
              for(int i=0;i<usuarios.size();i++)
             {
@@ -389,13 +445,17 @@ public class ConsultaUsuarios extends javax.swing.JDialog {
                 fila[6]=usuarios.get(i).getPerCuidad();
                 fila[7]=usuarios.get(i).getPerTelefono();
                 fila[8]=usuarios.get(i).getPerFechaNac();
-                fila[9]=usuarios.get(i).getPuesto();
+                //fila[9]=usuarios.get(i).getPuesto();
                 
                 personalModel.addRow(fila);
             }//cierra for
             
              tblUsuarios.setModel(personalModel);    
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void btnRefActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefActionPerformed
+       obtenerPersonal();
+    }//GEN-LAST:event_btnRefActionPerformed
 
     
     /**
@@ -445,8 +505,8 @@ public class ConsultaUsuarios extends javax.swing.JDialog {
     private javax.swing.JButton btnAgregar;
     private javax.swing.JButton btnCerrar;
     private javax.swing.JButton btnEditar;
+    private javax.swing.JButton btnRef;
     private javax.swing.JComboBox<String> cmbConsulta;
-    private datechooser.beans.DateChooserCombo dateChooserCombo1;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
