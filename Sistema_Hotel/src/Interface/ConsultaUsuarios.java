@@ -1,32 +1,22 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package Interface;
 
-import java.awt.Dimension;
+import Repository.PersonalRepository;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import org.hibernate.Query;
-import org.hibernate.Session;
 import sistemahotel.entity.Personal;
+import sistemahotel.entity.Puesto;
 import sistemahotel.util.CRUD;
 
-/**
- *
- * @author randompc
- */
 public class ConsultaUsuarios extends javax.swing.JDialog {
     
-    String[] header={"id","Nombre","Apellido","Direccion","Calle","Colonia","Ciudad","Telefono","Fecha de nacimiento"};
-        private List<Personal>usuarios = new ArrayList<Personal>();
+    String[] header={"id","Nombre","Apellido","Direccion","Calle","Colonia","Ciudad","Telefono","Fecha de nacimiento","Puesto_id"};
+    private List<Personal>personal = new ArrayList<Personal>();
+    Vector<String> tableHeaders = new Vector<>();
+    Vector tableData = new Vector();
 
-        String consulta="";
+        String consulta="id";
     /**
      * Creates new form ConsultarClientes
      */
@@ -37,12 +27,13 @@ public class ConsultaUsuarios extends javax.swing.JDialog {
         Dimension dim = this.getToolkit().getScreenSize();
         this.setSize(dim);*/
         obtenerPersonal();
+        tblUsuarios.setModel(new DefaultTableModel(tableData, tableHeaders));
     }
     
     public void obtenerPersonal()
     {
              //DefaultTableModel personalModel= new DefaultTableModel();
-             Vector<String> tableHeaders = new Vector<>();
+             
              
              tableHeaders.add("Id");
              tableHeaders.add("Nombre");
@@ -53,49 +44,36 @@ public class ConsultaUsuarios extends javax.swing.JDialog {
              tableHeaders.add("Ciudad");
              tableHeaders.add("Telefono");             
              tableHeaders.add("Fecha de Nacimiento");
-             //tableHeaders.add("Puesto");
+             tableHeaders.add("Puesto");
+           
              
-             
-             
-             Vector tableData = new Vector();
              /*personalModel.setColumnIdentifiers(header);*/
              
-             List listaDePersonal = CRUD.obtenerTodos("Personal", 0);
-                    // Object[] fila=new Object[personalModel.getColumnCount()];
+             List<Object[]> lista = PersonalRepository.obtenerTodos("Personal", 0);
+             
+             for(Object[] row : lista){
+
+                     Personal miPersonal = (Personal)row[0];
+                     Vector<Object> oneRow = new Vector<>();
+                        oneRow.add(miPersonal.getId());
+                        oneRow.add(miPersonal.getPerNombre());
+                        oneRow.add(miPersonal.getPerApellido());
+                        oneRow.add(miPersonal.getPerDireccion());
+                        oneRow.add(miPersonal.getPerCalle());
+                        oneRow.add(miPersonal.getPerColonia());
+                        oneRow.add(miPersonal.getPerCuidad());
+                        oneRow.add(miPersonal.getPerTelefono());
+                        oneRow.add(miPersonal.getPerFechaNac());
                      
-             for (Iterator it = listaDePersonal.iterator(); it.hasNext();){
-                 Object o = it.next();
-                 Personal miPersonal = (Personal)o;
-                 Vector<Object> oneRow = new Vector<>();
-                 oneRow.add(miPersonal.getId());
-                 oneRow.add(miPersonal.getPerNombre());
-                 oneRow.add(miPersonal.getPerApellido());
-                 oneRow.add(miPersonal.getPerDireccion());
-                 oneRow.add(miPersonal.getPerCalle());
-                 oneRow.add(miPersonal.getPerColonia());
-                 oneRow.add(miPersonal.getPerCuidad());
-                 oneRow.add(miPersonal.getPerTelefono());
-                 oneRow.add(miPersonal.getPerFechaNac());
-                 oneRow.add(miPersonal.getPuesto());
-                 tableData.add(oneRow);
+                        Puesto miPuesto = (Puesto)row[1];
+                        oneRow.add(miPuesto.getPueNombre());
+                     
+                    tableData.add(oneRow);
+               
              }
-             /*for(int i=0;i<usuarios.size();i++)
-             {
-                fila[0]=usuarios.get(i).getId();
-                fila[1]=usuarios.get(i).getPerNombre();
-                fila[2]=usuarios.get(i).getPerApellido();
-                fila[3]=usuarios.get(i).getPerDireccion();
-                fila[4]=usuarios.get(i).getPerCalle();
-                fila[5]=usuarios.get(i).getPerColonia();
-                fila[6]=usuarios.get(i).getPerCuidad();
-                fila[7]=usuarios.get(i).getPerTelefono();
-                fila[8]=usuarios.get(i).getPerFechaNac();
-                fila[9]=usuarios.get(i).getPuesto();
-                
-                personalModel.addRow(fila);
-            }//cierra for*/
+ 
             
-             tblUsuarios.setModel(new DefaultTableModel(tableData, tableHeaders));
+             
     }
     
 
@@ -117,28 +95,30 @@ public class ConsultaUsuarios extends javax.swing.JDialog {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         txtId = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
+        txtNombre = new javax.swing.JTextField();
+        txtApellido = new javax.swing.JTextField();
+        txtTelefono = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        jTextField5 = new javax.swing.JTextField();
-        jTextField6 = new javax.swing.JTextField();
-        jTextField7 = new javax.swing.JTextField();
+        txtDireccion = new javax.swing.JTextField();
+        txtCalle = new javax.swing.JTextField();
+        txtColonia = new javax.swing.JTextField();
         jTextField8 = new javax.swing.JTextField();
         btnAgregar = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jTextField9 = new javax.swing.JTextField();
+        dateChooserCombo1 = new datechooser.beans.DateChooserCombo();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblUsuarios = new javax.swing.JTable();
         txtBuscar = new javax.swing.JTextField();
         cmbConsulta = new javax.swing.JComboBox<>();
-        jButton1 = new javax.swing.JButton();
+        btnBuscar = new javax.swing.JButton();
         btnRef = new javax.swing.JButton();
+        jLabel11 = new javax.swing.JLabel();
         btnCerrar = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
 
@@ -155,15 +135,18 @@ public class ConsultaUsuarios extends javax.swing.JDialog {
 
         jLabel4.setText("Telefono:");
 
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+        txtId.setText("-1");
+        txtId.setEnabled(false);
+
+        txtNombre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
+                txtNombreActionPerformed(evt);
             }
         });
 
-        jTextField3.addActionListener(new java.awt.event.ActionListener() {
+        txtApellido.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField3ActionPerformed(evt);
+                txtApellidoActionPerformed(evt);
             }
         });
 
@@ -176,6 +159,11 @@ public class ConsultaUsuarios extends javax.swing.JDialog {
         jLabel8.setText("Cuidad:");
 
         btnAgregar.setText("Agregar");
+        btnAgregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarActionPerformed(evt);
+            }
+        });
 
         jLabel9.setText("Fecha de nacimiento :");
 
@@ -194,10 +182,10 @@ public class ConsultaUsuarios extends javax.swing.JDialog {
                     .addComponent(jLabel4))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
+                    .addComponent(txtNombre, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
                     .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField3)
-                    .addComponent(jTextField4))
+                    .addComponent(txtApellido)
+                    .addComponent(txtTelefono))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 68, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING)
@@ -206,17 +194,19 @@ public class ConsultaUsuarios extends javax.swing.JDialog {
                     .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jTextField6, javax.swing.GroupLayout.DEFAULT_SIZE, 145, Short.MAX_VALUE)
-                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField7)
+                    .addComponent(txtCalle, javax.swing.GroupLayout.DEFAULT_SIZE, 145, Short.MAX_VALUE)
+                    .addComponent(txtDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtColonia)
                     .addComponent(jTextField8))
                 .addGap(41, 41, 41)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel9)
                     .addComponent(jLabel10))
                 .addGap(18, 18, 18)
-                .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(150, 150, 150))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(dateChooserCombo1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(85, 85, 85))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnAgregar)
@@ -226,19 +216,21 @@ public class ConsultaUsuarios extends javax.swing.JDialog {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(14, 14, 14)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5)
-                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel9))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel1)
+                        .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel5)
+                        .addComponent(txtDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel9))
+                    .addComponent(dateChooserCombo1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel2)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel6)
-                        .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txtCalle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel10)
                         .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -246,9 +238,9 @@ public class ConsultaUsuarios extends javax.swing.JDialog {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel3)
-                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtApellido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel7))
-                    .addComponent(jTextField7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtColonia, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -256,10 +248,10 @@ public class ConsultaUsuarios extends javax.swing.JDialog {
                         .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel4)
-                        .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
                 .addComponent(btnAgregar)
-                .addContainerGap())
+                .addGap(32, 32, 32))
         );
 
         jPanel2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -295,10 +287,10 @@ public class ConsultaUsuarios extends javax.swing.JDialog {
             }
         });
 
-        jButton1.setText("Buscar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnBuscar.setText("Buscar");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnBuscarActionPerformed(evt);
             }
         });
 
@@ -309,6 +301,8 @@ public class ConsultaUsuarios extends javax.swing.JDialog {
             }
         });
 
+        jLabel11.setText("Buscar:");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -317,16 +311,20 @@ public class ConsultaUsuarios extends javax.swing.JDialog {
                 .addGap(34, 34, 34)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jButton1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 929, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(17, 17, 17)
+                        .addComponent(jLabel11)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(cmbConsulta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(31, 31, 31)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnBuscar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnRef)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 929, Short.MAX_VALUE))
-                .addContainerGap())
+                        .addGap(205, 205, 205))))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -335,8 +333,9 @@ public class ConsultaUsuarios extends javax.swing.JDialog {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cmbConsulta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1)
-                    .addComponent(btnRef))
+                    .addComponent(btnBuscar)
+                    .addComponent(btnRef)
+                    .addComponent(jLabel11))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(57, Short.MAX_VALUE))
@@ -388,13 +387,13 @@ public class ConsultaUsuarios extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnEditarActionPerformed
 
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+    private void txtNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
+    }//GEN-LAST:event_txtNombreActionPerformed
 
-    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
+    private void txtApellidoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtApellidoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField3ActionPerformed
+    }//GEN-LAST:event_txtApellidoActionPerformed
 
     private void cmbConsultaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbConsultaActionPerformed
                                        
@@ -404,7 +403,7 @@ public class ConsultaUsuarios extends javax.swing.JDialog {
      }
      if(cmbConsulta.getSelectedIndex()==1)
      {
-      consulta="pernombre"; 
+      consulta="perNombre"; 
      }
      if(cmbConsulta.getSelectedIndex()==2)
      {
@@ -416,46 +415,98 @@ public class ConsultaUsuarios extends javax.swing.JDialog {
                                               
     }//GEN-LAST:event_cmbConsultaActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         DefaultTableModel personalModel= new DefaultTableModel();      
+        int id= Integer.parseInt(txtBuscar.getText());    
+        
         if(consulta=="id")
         {
-            int id= Integer.parseInt(txtBuscar.getText());           
+                
 
             personalModel.setColumnIdentifiers(header);
             //usuarios=CRUD.consultarNumeric("Personal",consulta,id);
-            Personal miPersonal = Repository.PersonalRepository.obtenerPersonalPorId(id);
-            JOptionPane.showMessageDialog(null, miPersonal.getPerNombre());
+              List<Object[]> lista = PersonalRepository.obtenerPersonalPorId(id, 0);
+             
+                            for(Object[] row : lista)
+                              {
+
+                                Personal miPersonal = (Personal)row[0];
+                                Vector<Object> oneRow = new Vector<>();
+                                oneRow.add(miPersonal.getId());
+                                oneRow.add(miPersonal.getPerNombre());
+                                oneRow.add(miPersonal.getPerApellido());
+                                oneRow.add(miPersonal.getPerDireccion());
+                                oneRow.add(miPersonal.getPerCalle());
+                                oneRow.add(miPersonal.getPerColonia());
+                                oneRow.add(miPersonal.getPerCuidad());
+                                oneRow.add(miPersonal.getPerTelefono());
+                                oneRow.add(miPersonal.getPerFechaNac());
+                     
+                                Puesto miPuesto = (Puesto)row[1];
+                                oneRow.add(miPuesto.getPueNombre());
+                     
+                                personalModel.addRow(oneRow);
+                                
+                             }
+                                                
+                    tblUsuarios.setModel(personalModel);
+                    tblUsuarios.setModel(personalModel);
+               
+             
         }
-        else
-        {
-        String texto=txtBuscar.getText();
-        personalModel.setColumnIdentifiers(header);
-        usuarios=CRUD.consultarString("Personal",consulta,texto);
-        }
-        Object[] fila=new Object[personalModel.getColumnCount()];
-             for(int i=0;i<usuarios.size();i++)
-            {
-                fila[0]=usuarios.get(i).getId();
-                fila[1]=usuarios.get(i).getPerNombre();
-                fila[2]=usuarios.get(i).getPerApellido();
-                fila[3]=usuarios.get(i).getPerDireccion();
-                fila[4]=usuarios.get(i).getPerCalle();
-                fila[5]=usuarios.get(i).getPerColonia();
-                fila[6]=usuarios.get(i).getPerCuidad();
-                fila[7]=usuarios.get(i).getPerTelefono();
-                fila[8]=usuarios.get(i).getPerFechaNac();
-                //fila[9]=usuarios.get(i).getPuesto();
-                
-                personalModel.addRow(fila);
-            }//cierra for
-            
-             tblUsuarios.setModel(personalModel);    
-    }//GEN-LAST:event_jButton1ActionPerformed
+                else
+                    {
+                        String texto=txtBuscar.getText();
+                        personalModel.setColumnIdentifiers(header);
+                        List<Object[]> lista =PersonalRepository.obtenerPersonalPorString(consulta, "'"+texto+"'",0);
+        
+                            for(Object[] row : lista)
+                              {
+
+                                Personal miPersonal = (Personal)row[0];
+                                Vector<Object> oneRow = new Vector<>();
+                                oneRow.add(miPersonal.getId());
+                                oneRow.add(miPersonal.getPerNombre());
+                                oneRow.add(miPersonal.getPerApellido());
+                                oneRow.add(miPersonal.getPerDireccion());
+                                oneRow.add(miPersonal.getPerCalle());
+                                oneRow.add(miPersonal.getPerColonia());
+                                oneRow.add(miPersonal.getPerCuidad());
+                                oneRow.add(miPersonal.getPerTelefono());
+                                oneRow.add(miPersonal.getPerFechaNac());
+                     
+                                Puesto miPuesto = (Puesto)row[1];
+                                oneRow.add(miPuesto.getPueNombre());
+                     
+                                personalModel.addRow(oneRow);
+                                
+                             }
+                                                
+                    tblUsuarios.setModel(personalModel);
+               
+                }
+    }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnRefActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefActionPerformed
        obtenerPersonal();
     }//GEN-LAST:event_btnRefActionPerformed
+
+    private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
+        String nombre=txtNombre.getText();
+       // BigDecimal paga=new BigDecimal(txtPago.getText());
+       // Personal personal=new Personal();
+        
+        //puesto.setPueNombre(nombre);
+        //puesto.setPueSueldo(paga);
+        
+        //try {
+         //   int conf=CRUD.guardar(puesto);
+        //} catch (Exception ex) {
+       //     Logger.getLogger(jdPuestos.class.getName()).log(Level.SEVERE, null, ex);
+        //}
+        
+        //obtenerPuestos();
+    }//GEN-LAST:event_btnAgregarActionPerformed
 
     
     /**
@@ -503,13 +554,15 @@ public class ConsultaUsuarios extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregar;
+    private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnCerrar;
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnRef;
     private javax.swing.JComboBox<String> cmbConsulta;
-    private javax.swing.JButton jButton1;
+    private datechooser.beans.DateChooserCombo dateChooserCombo1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -521,16 +574,16 @@ public class ConsultaUsuarios extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField7;
     private javax.swing.JTextField jTextField8;
     private javax.swing.JTextField jTextField9;
     private javax.swing.JTable tblUsuarios;
+    private javax.swing.JTextField txtApellido;
     private javax.swing.JTextField txtBuscar;
+    private javax.swing.JTextField txtCalle;
+    private javax.swing.JTextField txtColonia;
+    private javax.swing.JTextField txtDireccion;
     private javax.swing.JTextField txtId;
+    private javax.swing.JTextField txtNombre;
+    private javax.swing.JTextField txtTelefono;
     // End of variables declaration//GEN-END:variables
 }

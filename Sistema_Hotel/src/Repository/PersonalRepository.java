@@ -18,25 +18,39 @@ import org.hibernate.Session;
  * @author randompc
  */
 public class PersonalRepository extends Personal {
-    public static Personal obtenerPersonalPorId(int id) throws HibernateException{
+    public static List obtenerPersonalPorId(int id,int totales) throws HibernateException{
         Session session = null;
-        Personal personal = null;
+        List resultList = null;
+        List<Object[]> rows = null;
         try{
             session = HibernateUtil.getSessionFactory().openSession();
+            session.beginTransaction();
+                Query q = session.createQuery("select e, a from Personal e "
+                        + " INNER JOIN e.puesto a where e.id="+id);
+                if (totales!=0){
+                    q.setMaxResults(totales);
+                }
+                //resultList = (List)q.list();
+                rows = q.list();
+                
+                
+            session.getTransaction().commit();
             
-                session.beginTransaction();
-                personal = (Personal)session.get(Personal.class, id);
-                session.getTransaction().commit();                
         }finally{
-            if ( session!= null){
+            if (session!=null){
                 try{
                     session.close();
-                }catch(HibernateException ex){
-                    HibernateException ignore;
-                }
-            }
-        }
-        return personal;
+                }catch(HibernateException hex){
+                   HibernateException ignore;
+                   JOptionPane.showMessageDialog(null, 
+                           "Error: "+hex.getMessage()+"\n"+
+                                   " Archivo: CRUD.java\n"+
+                                   "Lineas: 242-253.", 
+                           "Error", JOptionPane.ERROR_MESSAGE);
+                }//fin del catch
+            }//fin del if
+        }//fin finally
+        return rows;
     }
     
     public static List obtenerTodos(String entidad, int totales)throws HibernateException{
@@ -73,6 +87,42 @@ public class PersonalRepository extends Personal {
         }//fin finally
         return rows;
     }
+    
+
+    public static List obtenerPersonalPorString(String attrib,String charBusqueda,int totales) throws HibernateException{
+         Session session = null;
+        List resultList = null;
+        List<Object[]> rows = null;
+        try{
+            session = HibernateUtil.getSessionFactory().openSession();
+            session.beginTransaction();
+                Query q = session.createQuery("select e,a from Personal e "
+                        + " INNER JOIN e.puesto a  where e."+attrib+"="+charBusqueda);
+                if (totales!=0){
+                    q.setMaxResults(totales);
+                }
+                //resultList = (List)q.list();
+                rows = q.list();
+                
+                
+            session.getTransaction().commit();
+            
+        }finally{
+            if (session!=null){
+                try{
+                    session.close();
+                }catch(HibernateException hex){
+                   HibernateException ignore;
+                   JOptionPane.showMessageDialog(null, 
+                           "Error: "+hex.getMessage()+"\n"+
+                                   " Archivo: CRUD.java\n"+
+                                   "Lineas: 242-253.", 
+                           "Error", JOptionPane.ERROR_MESSAGE);
+                }//fin del catch
+            }//fin del if
+        }//fin finally
+        return rows;
+    } 
     
     
 }
