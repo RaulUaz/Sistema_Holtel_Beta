@@ -5,6 +5,8 @@
  */
 package Repository;
 
+import datechooser.beans.DateChooserCombo;
+import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
 import org.hibernate.HibernateException;
@@ -123,6 +125,14 @@ public class PersonalRepository extends Personal {
         }//fin finally
         return rows;
     } 
+    
+        public static Date fecha(DateChooserCombo dateChooserCombo)//recibe el jdatechooser
+    {
+        Date date = dateChooserCombo.getCurrent().getTime();//obtiene la fecha larga
+        long d = date.getTime();//conversion long
+        java.sql.Date fecha= new java.sql.Date(d);//conversion a sql
+        return fecha;//regresa date
+    }
     
     
 }

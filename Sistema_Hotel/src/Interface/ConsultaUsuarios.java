@@ -1,8 +1,15 @@
 
 import Repository.PersonalRepository;
+import Repository.PuestoRepository;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.ComboBoxModel;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import sistemahotel.entity.Personal;
@@ -28,6 +35,7 @@ public class ConsultaUsuarios extends javax.swing.JDialog {
         this.setSize(dim);*/
         obtenerPersonal();
         tblUsuarios.setModel(new DefaultTableModel(tableData, tableHeaders));
+        comboboxPuesto();
     }
     
     public void obtenerPersonal()
@@ -105,12 +113,12 @@ public class ConsultaUsuarios extends javax.swing.JDialog {
         txtDireccion = new javax.swing.JTextField();
         txtCalle = new javax.swing.JTextField();
         txtColonia = new javax.swing.JTextField();
-        jTextField8 = new javax.swing.JTextField();
+        txtCuidad = new javax.swing.JTextField();
         btnAgregar = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
-        jTextField9 = new javax.swing.JTextField();
-        dateChooserCombo1 = new datechooser.beans.DateChooserCombo();
+        dchNacimiento = new datechooser.beans.DateChooserCombo();
+        cmbPuestos = new javax.swing.JComboBox<>();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblUsuarios = new javax.swing.JTable();
@@ -150,7 +158,7 @@ public class ConsultaUsuarios extends javax.swing.JDialog {
             }
         });
 
-        jLabel5.setText("Direccion:");
+        jLabel5.setText("Num.direccion:");
 
         jLabel6.setText("Calle:");
 
@@ -169,6 +177,8 @@ public class ConsultaUsuarios extends javax.swing.JDialog {
 
         jLabel10.setText("Puesto ID:");
 
+        cmbPuestos.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -186,7 +196,7 @@ public class ConsultaUsuarios extends javax.swing.JDialog {
                     .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtApellido)
                     .addComponent(txtTelefono))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 68, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING)
@@ -197,15 +207,15 @@ public class ConsultaUsuarios extends javax.swing.JDialog {
                     .addComponent(txtCalle, javax.swing.GroupLayout.DEFAULT_SIZE, 145, Short.MAX_VALUE)
                     .addComponent(txtDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtColonia)
-                    .addComponent(jTextField8))
+                    .addComponent(txtCuidad))
                 .addGap(41, 41, 41)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel9)
                     .addComponent(jLabel10))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(dateChooserCombo1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(dchNacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cmbPuestos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(85, 85, 85))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -223,7 +233,7 @@ public class ConsultaUsuarios extends javax.swing.JDialog {
                         .addComponent(jLabel5)
                         .addComponent(txtDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel9))
-                    .addComponent(dateChooserCombo1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(dchNacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -233,7 +243,7 @@ public class ConsultaUsuarios extends javax.swing.JDialog {
                         .addComponent(txtCalle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel10)
-                        .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(cmbPuestos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -241,11 +251,11 @@ public class ConsultaUsuarios extends javax.swing.JDialog {
                         .addComponent(txtApellido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel7))
                     .addComponent(txtColonia, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel8)
-                        .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txtCuidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel4)
                         .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -487,25 +497,59 @@ public class ConsultaUsuarios extends javax.swing.JDialog {
                 }
     }//GEN-LAST:event_btnBuscarActionPerformed
 
+    
+    private void comboboxPuesto()
+    {
+        DefaultComboBoxModel lista=new DefaultComboBoxModel();
+        List<Puesto> obtenerTodos = CRUD.obtenerTodos("Puesto", 0);
+        
+            for(int i=0;i<obtenerTodos.size();i++)
+            {
+              lista.addElement(obtenerTodos.get(i).getPueNombre().toString());
+            }
+         
+        cmbPuestos.setModel(lista);
+    }
+    
+    
+    
     private void btnRefActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRefActionPerformed
        obtenerPersonal();
     }//GEN-LAST:event_btnRefActionPerformed
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         String nombre=txtNombre.getText();
-       // BigDecimal paga=new BigDecimal(txtPago.getText());
-       // Personal personal=new Personal();
+        String apellido=txtNombre.getText();
+        String telefono=txtNombre.getText();
+        String direccion=txtNombre.getText();
+        String calle=txtNombre.getText();
+        String colonia=txtNombre.getText();
+        String cuidad=txtNombre.getText();
+        Date fecha=PersonalRepository.fecha(dchNacimiento);
+        //int puestoid=Integer.parseInt(txtPuestoID.getText());
+       
+        Personal personal=new Personal();
         
-        //puesto.setPueNombre(nombre);
-        //puesto.setPueSueldo(paga);
+        personal.setPerNombre(nombre);
+        personal.setPerApellido(apellido);
+        personal.setPerTelefono(telefono);
+        personal.setPerDireccion(direccion);
+        personal.setPerCalle(calle);
+        personal.setPerColonia(colonia);
+        personal.setPerCuidad(cuidad);
+        personal.setPerFechaNac(fecha);
+        List<Puesto> lista =new ArrayList<Puesto>();
+        Puesto puesto=null;
         
-        //try {
-         //   int conf=CRUD.guardar(puesto);
-        //} catch (Exception ex) {
-       //     Logger.getLogger(jdPuestos.class.getName()).log(Level.SEVERE, null, ex);
-        //}
         
-        //obtenerPuestos();
+        try {
+            int conf=CRUD.guardar(personal);
+        } catch (Exception ex) {
+            Logger.getLogger(ConsultaUsuarios.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        
+        obtenerPersonal();
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     
@@ -559,7 +603,8 @@ public class ConsultaUsuarios extends javax.swing.JDialog {
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnRef;
     private javax.swing.JComboBox<String> cmbConsulta;
-    private datechooser.beans.DateChooserCombo dateChooserCombo1;
+    private javax.swing.JComboBox<String> cmbPuestos;
+    private datechooser.beans.DateChooserCombo dchNacimiento;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -574,13 +619,12 @@ public class ConsultaUsuarios extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField8;
-    private javax.swing.JTextField jTextField9;
     private javax.swing.JTable tblUsuarios;
     private javax.swing.JTextField txtApellido;
     private javax.swing.JTextField txtBuscar;
     private javax.swing.JTextField txtCalle;
     private javax.swing.JTextField txtColonia;
+    private javax.swing.JTextField txtCuidad;
     private javax.swing.JTextField txtDireccion;
     private javax.swing.JTextField txtId;
     private javax.swing.JTextField txtNombre;

@@ -87,7 +87,7 @@
                       <Component id="txtApellido" alignment="0" max="32767" attributes="0"/>
                       <Component id="txtTelefono" alignment="0" max="32767" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="68" max="32767" attributes="0"/>
+                  <EmptySpace pref="40" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="jLabel5" alignment="1" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel6" alignment="1" min="-2" max="-2" attributes="0"/>
@@ -99,7 +99,7 @@
                       <Component id="txtCalle" pref="145" max="32767" attributes="0"/>
                       <Component id="txtDireccion" min="-2" pref="75" max="-2" attributes="0"/>
                       <Component id="txtColonia" alignment="0" max="32767" attributes="0"/>
-                      <Component id="jTextField8" max="32767" attributes="0"/>
+                      <Component id="txtCuidad" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="1" attributes="0">
@@ -108,8 +108,8 @@
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="jTextField9" min="-2" pref="90" max="-2" attributes="0"/>
-                      <Component id="dateChooserCombo1" min="-2" max="-2" attributes="0"/>
+                      <Component id="dchNacimiento" min="-2" max="-2" attributes="0"/>
+                      <Component id="cmbPuestos" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="85" max="-2" attributes="0"/>
               </Group>
@@ -132,7 +132,7 @@
                           <Component id="txtDireccion" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel9" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <Component id="dateChooserCombo1" min="-2" max="-2" attributes="0"/>
+                      <Component id="dchNacimiento" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
@@ -144,7 +144,7 @@
                       </Group>
                       <Group type="103" alignment="0" groupAlignment="3" attributes="0">
                           <Component id="jLabel10" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jTextField9" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="cmbPuestos" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -156,11 +156,11 @@
                       </Group>
                       <Component id="txtColonia" alignment="1" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel8" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jTextField8" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtCuidad" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <Group type="103" alignment="0" groupAlignment="3" attributes="0">
                           <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -215,7 +215,7 @@
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel5">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Direccion:"/>
+            <Property name="text" type="java.lang.String" value="Num.direccion:"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel6">
@@ -239,7 +239,7 @@
         </Component>
         <Component class="javax.swing.JTextField" name="txtColonia">
         </Component>
-        <Component class="javax.swing.JTextField" name="jTextField8">
+        <Component class="javax.swing.JTextField" name="txtCuidad">
         </Component>
         <Component class="javax.swing.JButton" name="btnAgregar">
           <Properties>
@@ -259,9 +259,22 @@
             <Property name="text" type="java.lang.String" value="Puesto ID:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="jTextField9">
+        <Component class="datechooser.beans.DateChooserCombo" name="dchNacimiento">
         </Component>
-        <Component class="datechooser.beans.DateChooserCombo" name="dateChooserCombo1">
+        <Component class="javax.swing.JComboBox" name="cmbPuestos">
+          <Properties>
+            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+              <StringArray count="4">
+                <StringItem index="0" value="Item 1"/>
+                <StringItem index="1" value="Item 2"/>
+                <StringItem index="2" value="Item 3"/>
+                <StringItem index="3" value="Item 4"/>
+              </StringArray>
+            </Property>
+          </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+          </AuxValues>
         </Component>
       </SubComponents>
     </Container>
