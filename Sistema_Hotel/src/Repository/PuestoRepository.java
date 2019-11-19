@@ -60,8 +60,43 @@ public class PuestoRepository {
         try{
             session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
-                Query q = session.createQuery("select e, from Personal e "
+                Query q = session.createQuery("select e, from Puesto e "
                         + " where e.id="+id);
+                if (totales!=0){
+                    q.setMaxResults(totales);
+                }
+                //resultList = (List)q.list();
+                rows = q.list();
+                
+                
+            session.getTransaction().commit();
+            
+        }finally{
+            if (session!=null){
+                try{
+                    session.close();
+                }catch(HibernateException hex){
+                   HibernateException ignore;
+                   JOptionPane.showMessageDialog(null, 
+                           "Error: "+hex.getMessage()+"\n"+
+                                   " Archivo: CRUD.java\n"+
+                                   "Lineas: 242-253.", 
+                           "Error", JOptionPane.ERROR_MESSAGE);
+                }//fin del catch
+            }//fin del if
+        }//fin finally
+        return rows;
+    }
+    
+        public static List obtenerPuestoPorNombre(String nombre,int totales) throws HibernateException{
+        Session session = null;
+        List resultList = null;
+        List<Object[]> rows = null;
+        try{
+            session = HibernateUtil.getSessionFactory().openSession();
+            session.beginTransaction();
+                Query q = session.createQuery("select e from Puesto e "
+                        + " where e.pueNombre like '%"+nombre+"%'");
                 if (totales!=0){
                     q.setMaxResults(totales);
                 }

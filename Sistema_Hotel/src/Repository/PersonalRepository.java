@@ -14,6 +14,7 @@ import org.hibernate.Query;
 import sistemahotel.entity.Personal;
 import sistemahotel.util.HibernateUtil;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 /**
  *
@@ -53,6 +54,35 @@ public class PersonalRepository extends Personal {
             }//fin del if
         }//fin finally
         return rows;
+    }
+    
+       /**
+     * Este método permite elimiar una categoría
+     */
+    public static int eliminar(Object object) throws Exception{
+        int result = 0;
+        Session session = null;
+        Transaction transaction = null;
+        try{
+            session = HibernateUtil.getSessionFactory().openSession();
+            transaction = session.getTransaction();
+            transaction.begin();
+                session.delete(object);
+            transaction.commit();
+            result = 1;
+        }catch(RuntimeException ex){
+            try{
+                if (session != null){
+                    session.getTransaction().rollback();
+                }
+            }catch(HibernateException e1){
+                        throw new Exception("No se pudieron guardar los cambios");
+            }
+            throw ex;
+        }finally{
+            session.close();
+        }
+        return result;        
     }
     
     public static List obtenerTodos(String entidad, int totales)throws HibernateException{
@@ -99,7 +129,7 @@ public class PersonalRepository extends Personal {
             session = HibernateUtil.getSessionFactory().openSession();
             session.beginTransaction();
                 Query q = session.createQuery("select e,a from Personal e "
-                        + " INNER JOIN e.puesto a  where e."+attrib+"="+charBusqueda);
+                        + " INNER JOIN e.puesto a  where e."+attrib+" like '%"+charBusqueda+"%'");
                 if (totales!=0){
                     q.setMaxResults(totales);
                 }
