@@ -1,5 +1,5 @@
 package sistemahotel.entity;
-// Generated 8/11/2019 10:16:25 PM by Hibernate Tools 4.3.1
+// Generated 15/11/2019 04:24:20 PM by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -20,11 +20,12 @@ public class Reservacion  implements java.io.Serializable {
      private int resNumCuarto;
      private float resPago;
      private Date resHoraLlegada;
+     private boolean resEntregada;
 
     public Reservacion() {
     }
 
-    public Reservacion(Cliente cliente, Recepcionista recepcionista, Date resEntradaCli, Date resSalidaCli, Date resFecha, int resNumPersonas, int resNumCuarto, float resPago, Date resHoraLlegada) {
+    public Reservacion(Cliente cliente, Recepcionista recepcionista, Date resEntradaCli, Date resSalidaCli, Date resFecha, int resNumPersonas, int resNumCuarto, float resPago, Date resHoraLlegada, boolean resEntregada) {
        this.cliente = cliente;
        this.recepcionista = recepcionista;
        this.resEntradaCli = resEntradaCli;
@@ -34,6 +35,7 @@ public class Reservacion  implements java.io.Serializable {
        this.resNumCuarto = resNumCuarto;
        this.resPago = resPago;
        this.resHoraLlegada = resHoraLlegada;
+       this.resEntregada = resEntregada;
     }
    
     public Integer getId() {
@@ -105,6 +107,13 @@ public class Reservacion  implements java.io.Serializable {
     
     public void setResHoraLlegada(Date resHoraLlegada) {
         this.resHoraLlegada = resHoraLlegada;
+    }
+    public boolean isResEntregada() {
+        return this.resEntregada;
+    }
+    
+    public void setResEntregada(boolean resEntregada) {
+        this.resEntregada = resEntregada;
     }
 
 

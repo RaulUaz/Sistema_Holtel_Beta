@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 8/11/2019 10:16:27 PM by Hibernate Tools 4.3.1 -->
+<!-- Generated 15/11/2019 04:24:22 PM by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
     <class name="sistemahotel.entity.Reservacion" table="reservacion" catalog="sistema_hotel" optimistic-lock="version">
         <id name="id" type="java.lang.Integer">
@@ -34,6 +34,9 @@
         </property>
         <property name="resHoraLlegada" type="time">
             <column name="RES_HORA_LLEGADA" length="8" not-null="true" />
+        </property>
+        <property name="resEntregada" type="boolean">
+            <column name="RES_ENTREGADA" not-null="true" />
         </property>
     </class>
 </hibernate-mapping>
